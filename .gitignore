@@ -50,7 +50,7 @@ rsconnect/
 .Rhistory
 R/.Rhistory
 data/.Rhistory
-data/ISPRS1/images/
+!/data/ISPRS1/images/
 data/ISPRS1/
 results/ISPRS1/
 !/data/ISPRS1/b_all.txt
