@@ -57,6 +57,6 @@ results/ISPRS1/
 !/results/ISPRS1/b_all_nrs.txt
 !/data/ISPRS7/images/
 !/data/ISPRS7/
-results/ISPRS7
+#results/ISPRS7
 !/results/ISPRS7/b_all_nrs.txt
 !/results/ISPRS7/b_all.txt
