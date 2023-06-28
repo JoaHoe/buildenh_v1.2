@@ -122,7 +122,7 @@ if (cas == "100_all+nonortho") { #solution for orthogonal lines
   
   for (i in z1) {
 
-    if (B8S$ortho[i] == 0 && B8S$theta_ang[i] > 90 && n_nonortholines2 != 1) { #change
+    if (B8S$ortho[i] == 0 && B8S$theta_ang[i] > 90 && n_nonortholines2 > 2) { 
       B8S$theta_adj[i] <- B8S$theta_adj[i] + 90
     }
   }
