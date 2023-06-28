@@ -26,6 +26,13 @@ if (Img_name == "ISPRS7") {
 
 if (Img_name == "ISPRS1") { 
   
+  #b11
+  if (bnr2 == 11 && p_pos == "cor_theta_av2") { 
+    theta_average2 <- w_av(ang2,len2) #call of function
+    theta_av2_mod <- theta_average2
+  } #end if
+  
+  
   #b36
   if (bnr2==36 && p_pos == "cor_theta_av2") { 
     theta_average2 <- 80.6169 #manual calculation by script 'support_intersect_corner_points', script #4
