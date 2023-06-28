@@ -31,20 +31,20 @@ cat("first program/script 'startup_buildenh.R' ","\n")
 old_dir <- setwd("./")
 getwd()
 #
-home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.2"
-home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.2/R"
+home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.2/buildenh_v1.2"
+home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.2/buildenh_v1.2/R"
 ###################################################################################
 
 ## title of project (manual input of characteristics)
 
-prj_title <- "ISPRS7_LCM1" #(example1)
+#prj_title <- "ISPRS7_LCM1" #(example1)
 #orthoimage: ISPRS7
 #classification method: DT/LCM1 by 17 attributes
 #training by orthoimage #7
 #enhancement of buildings
 #
 
-#prj_title <- "ISPRS1_LCM2" #example#2
+prj_title <- "ISPRS1_LCM2" #example#2
 #orthoimage ISPRS1 
 #classification method: DT/LCM2 by 5 attributes
 #training by orthoimage #26
@@ -65,8 +65,8 @@ setwd(home_dir)
 
 #select orthoimage (activate manually)
 #Img_name <- readline("type name of orthoimage: ") #line can be avoided when Img_name is selected
-Img_name <- "ISPRS7" #name of orthoimage to be processed (example1)
-#Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
+#Img_name <- "ISPRS7" #name of orthoimage to be processed (example1)
+Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
 #Img_name <- "NN" #name of orthoimage to be processed (orthoimage of your project)
 
 if (Img_name == "ISPRS7") { #example1
