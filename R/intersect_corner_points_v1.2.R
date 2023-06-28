@@ -492,12 +492,12 @@ if (cas == "100_all+nonortho") {
   np_vec2_red <- subset(np_vec2, np_vec2 != 0) #lines with B6$orto=2,3..
   len2 <- np_vec2_red
   #
+  #theta_average2 <- w_av(ang2,len2) #call of function
+  #theta_av2_mod <- theta_average2
   
-  theta_average2 <- w_av(ang2,len2) #call of function
-  theta_av2 <- theta_average2
-  cat("theta_av2 = ",theta_average2, " degree", sep = "","\n") #second main direction
-  f <- paste("./data/",Img_name,"/theta_av2_b", bnr2,".txt",sep="")
-  write.table(theta_av2,file=f)
+  #cat("theta_av2 = ",theta_average2, " degree", sep = "","\n") #second main direction
+  #f <- paste("./data/",Img_name,"/theta_av2_b", bnr2,".txt",sep="")
+  #write.table(theta_av2,file=f)
   
   n_ortholines2 <- sum(B6_seq$ortho) 
   cat("n_ortholines2= ",n_ortholines2, "\n")
@@ -512,7 +512,7 @@ if (cas == "100_all+nonortho") {
     source(paste("./spObj/spObj_intersect_corner_points_v",v_nr,".R",sep=""))
     theta_av2_mod
     
-    #output theta_av2
+    #output theta_av2_mod
     setwd(home_dir)
     f <- paste("./data/",Img_name,"/theta_av2_b", bnr2,".txt",sep="")
     write.table(theta_av2_mod,file=f)
