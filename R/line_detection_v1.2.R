@@ -1582,7 +1582,7 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
     
     #loop for plotting approximate lines
     for (n1 in vec3) {
-      browser()
+      #browser()
       cat("PC_nr=", B5_6$lnr[n1], "\n")
       theta_angle <- B5_6$theta_angle[n1]
       theta_math <- (180 - theta_angle) #theta of oriented line
@@ -1615,7 +1615,7 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
       cat("#","\n")
     } #end for-loop (large scale)
     
-    cat("Are the lines correctly identified?","\n") #cas="100_all+nonortho"
+    cat("are the lines correctly identified?","\n") #cas="100_all+nonortho"
     cat("if demo -> type: N","\n")
     answ <- readline("type: Y or N: ")
     
@@ -1642,11 +1642,11 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
   
   #loop
   for (n1 in lnr_det5) {
-    cat("i= ", i,"\n")
-    cat("n1= ", n1,"\n")
+    #cat("i= ", i,"\n")
+    #cat("n1= ", n1,"\n")
     j = 1
     while (j <= k14) {
-      cat("j= ",j,"\n")
+      #cat("j= ",j,"\n")
       if (n1 == B0$lnr[j]) {
         B5_6[i,] <- B0[j,]
         i = i+1
