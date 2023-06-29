@@ -141,6 +141,7 @@ k_y_auto <- 1
 
 #setup of parameter/variables
 par(mai = c(1.02,0.82,0.82,0.42)) #setup of margins/plot region [inches]
+
 bnr2_part <- "NA" #partition of object
 
 cat("end of 'startup_buildenh.R' - continue with 'extract_all_buildings.R' ", "\n")
