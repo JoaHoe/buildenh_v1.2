@@ -52,11 +52,11 @@ R/.Rhistory
 data/.Rhistory
 !data/table_ISPRS1.pdf
 !data/ISPRS1/b_all.txt
-!results/ISPRS1/
+!results/ISPRS1/dummy.txt
 !data/table_ISPRS7.pdf
 !data/ISPRS7/b_all.txt
 !data/tt_prior_sek.RData
-!results/ISPRS7/
+!results/ISPRS7/dummy.txt
 data/ISPRS1
 data/ISPRS1/images/
 data/ISPRS7
