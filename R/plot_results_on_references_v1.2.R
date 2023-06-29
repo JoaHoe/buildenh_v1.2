@@ -290,6 +290,12 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
     source(paste("extract_single_building_v",v_nr,".R",sep = ""))  
   } #end if-else
   
+  #store bnr2 in a file containing all processed buildings
+  bnr2
+  setwd(home_dir)
+  fname15 <- paste("./results/",Img_name,"/b_all.txt",sep="")
+  write.table(bnr2, file= fname15, row.names = F, col.names = F, append=TRUE)
+  
   ##processing of other objects (buildings)
 
   answ2 <- readline("other buildings to process? type Y or N: ")
@@ -317,13 +323,22 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
   }  #end (answ2 = "Y" && proc_mode = "obj_wise")
 
   if (answ2 == "N") {
-      cat("end of program 'plot_results_on_references.R'","\n")
-      stop("end of program package 'buildenh' ","\n")
+    
+    #planning a new processing
+    answ5 <- readline("do you want to start a complete new processing? type Y or N: ")
+    
+    if (answ5 == "Y") { 
+      setwd(home_dir)
+      fname15 <- paste("./results/",Img_name,"/",sep="")
+      setwd(fname15)
+      file.remove("b_all.txt") #removal of files with numbers of processed objects (buildings)
+    }
+    
+    cat("end of program 'plot_results_on_references.R'","\n")
+    stop("end of program package 'buildenh' ","\n")
   } #end if answ2="N"
-
+  
 } #end of cas=1,2,3,4
-
-
 
 ##end of program 'plot_results_on_references.R'
 
