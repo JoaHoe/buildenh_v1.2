@@ -17,8 +17,8 @@ cat("version_number= ",v_nr,"\n")
 #instructions: type 'Ctrl+A'(select all) and 'Source'
 #instructions: new users may start by examples (processing mode = demo)
 #instructions: The parameters (bnr, p_m_md, part, ro_rg, ref_l, cas, n_pix, c_ld, sek, c_pos, c_sek, 
-#c_adj_l) must be selected. The used parameters in the example can be found in a table stored under /data.
-#instructions: find supporting software in directory '/support'
+#c_adj_l) must be selected. The used parameters in the example can be found in a table stored at './data'.
+#instructions: find supporting software at './R/support'
 #depends: R 4.2.1; BiocManager 1.78.0-0 (EBImage); spatstat 2.3-4; tiff 01-11; rpart 4.1.19; nlme 3.1-162;
 #Copyright(C) 2022 Joachim Höhle
 #GNU General Public License (GPL)
