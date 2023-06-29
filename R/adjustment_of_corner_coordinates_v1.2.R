@@ -542,11 +542,6 @@ if (cas == "100_all") { #solving 6corner buildings
   #
 } #end cas="100_all" 
 
-#store bnr2 in a file containing all processed buildings
-bnr2
-setwd(home_dir)
-fname15 <- paste("./results/",Img_name,"/b_all.txt",sep="")
-write.table(bnr2, file= fname15, row.names = F, col.names = F, append=TRUE)
 
 #output of adjusted coordinates
 # setwd(home_dir)
