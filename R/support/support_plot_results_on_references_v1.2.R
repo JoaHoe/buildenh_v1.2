@@ -208,7 +208,11 @@ plot(x,-y, pch=3, cex=1.3, cex.axis=1.3,cex.lab=1.3,col="red",
 fname12 <- paste("./results/",Img_name,"/b_all.txt",sep="")
 b_all <- read.table(fname12, header = FALSE)
 b_all2 <- b_all
-b_all2$V1 <- b_all$V1[order(b_all$V1, decreasing = FALSE)]
+
+if (length(b_all) >= 2 ) {
+  b_all2$V1 <- b_all$V1[order(b_all$V1, decreasing = FALSE)]  
+}
+
 b_all2$V1
 
 #remove multiple object-numbers
@@ -252,16 +256,9 @@ for (i in b_all_nr)  {
   setwd(home_dir)
   b <- read.table(fname12,header=T)
   k1 <- nrow(b)
-  names(b) <- c("Points_x","Points_y")
-  
+  names(b) <- c("nr","Points_x","Points_y")
   cat("plot of building-outline","\n")
-  i <- 0
-  
-  while(i < k1) {
-    i <- i+1
-    lines(b, col="black", asp=1, type="l", lwd=1, lty=1)
-  } #end while
-  
+  lines(b$Points_x, b$Points_y, col="black", asp=1, type="l", lwd=1, lty=1)
 } #end loop
 #
 
@@ -279,16 +276,12 @@ for (k in b_all_nr) {
   b <- read.table(fname12, header=T)
   b
   k1 <- nrow(b)
-  names(b) <- c("Points_x","Points_y")
+  names(b) <- c("nr","Points_x","Points_y")
   
   cat("plot of building-outline","\n")
-  i <- 0
   
-  while(i < k1) {
-    i <- i+1
-    lines(b$Points_x, -b$Points_y, col="white", asp=1, 
-          type="l", lwd=5, lty=1)
-  } #end while
+  lines(b$Points_x, -b$Points_y, col="white", asp=1, 
+          type="l", lwd=2, lty=1)
   
 } #end loop
 #
@@ -308,16 +301,8 @@ for (k in b_all_nr) {
   b <- read.table(fname12, header=T)
   b
   k1 <- nrow(b)
-  names(b) <- c("Points_x","Points_y")
-  
-  #loop
-  i <- 0
-  
-  while(i < k1) {
-    i <- i+1
-    lines(b$Points_x, -b$Points_y, col="red", asp=1, type="l", lwd=3, lty=1)
-  } #end while
-  
+  names(b) <- c("nr","Points_x","Points_y")
+  lines(b$Points_x, -b$Points_y, col="red", asp=1, type="l", lwd=3, lty=1)
 } #end loop
 #
 
