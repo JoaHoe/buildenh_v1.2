@@ -498,8 +498,8 @@ theta_ref_ind <- B4[lnr,2]
 
 #histogram
 b_v <- as.numeric(B4[,2])
-vbr <- 1 : 36
-hn <- hist(b_v,breaks=vbr) #plot of histogram b_v
+vbr <- 0.5 : 36.5
+hn <- hist(b_v,breaks=vbr,plot=TRUE) #plot of histogram b_v
 
 if (theta_ref_ind <= 18) { 
   alph_ref_ind <- theta_ref_ind + 18 
