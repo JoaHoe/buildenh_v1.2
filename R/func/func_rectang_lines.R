@@ -11,6 +11,7 @@ rectang_lines <- function() {
   #browser()
   B5_4
   cat("theta_ref = ",theta_ref, "\n")
+  cat("wd = ",wd, "\n")
   k14 <- length(B5_4$lnr)
   B5_4b <- B5_4
   B5_4b[,1:7] <- 0
