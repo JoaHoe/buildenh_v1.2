@@ -8,6 +8,7 @@ loadLib_jh <- function() {
   source("./func/func_adjust_coord.R")
   source("./func/func_adj_4corcoo.R")
   source("./func/func_adj_6corcoo.R")
+  source("./func/func_adj_orthog_corcoo.R")
   source("./func/func_corner_name.R")
   source("./func/func_design_mat.R")
   source("./func/func_design_mat2.R")
