@@ -221,8 +221,10 @@ if (Img_name == "ISPRS1") {
   #cas='100_all'
   
   if (bnr2 == 10 && p_pos == "cor_det") { 
-    B5_6R4 <- B5_6[-c(2,6,7,8,11,12,13,18),]
+    B5_6
+    B5_6R4 <- B5_6[-c(2,3,4,8,11,12,13,14,15,20),]
     row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
   } #end b10
   
   
@@ -249,7 +251,7 @@ if (Img_name == "ISPRS1") {
   #cas='100_all'
   
   if (bnr2 == 15 && p_pos == "cor_det") { 
-    B5_6R4 <- B5_6[-c(1,6,7),]
+    B5_6R4 <- B5_6[-6,]
     row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
   } #end b15
   
