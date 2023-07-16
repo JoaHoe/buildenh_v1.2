@@ -1368,6 +1368,7 @@ if (cas == "100_all") {
   #loop for approximate lines
   for (n1 in vec3) {
     cat("PC_nr=", B5_6$lnr[n1], "\n")
+    browser()
     theta_angle <- B5_6$theta_angle[n1]
     theta_math <- (180 - theta_angle) #theta of oriented line
     x <- centers_PC[n1,2]
@@ -1756,7 +1757,11 @@ if (cas == "4_long") {
 }
 
 if (cas == "100_all") {
-  B5_6 <- B5_6R4
+  print(B5_6)
+  n_B5_6 <- length(B5_6$lnr)
+  n_B5_6R4 <- length(B5_6R4$lnr)
+  B5_6 <- B5_6[-c((n_B5_6R4+1):n_B5_6),]
+  B5_6[1 : n_B5_6R4,] <- B5_6R4
 }
 
 if (cas == "100_all+nonortho") {
@@ -1931,6 +1936,7 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), pch=20, asp=1, ce
 len
 for (n1 in len) {
   cat("PC_nr=", B5_6$lnr[n1], "\n")
+  browser()
   theta_angle <- B5_6$theta_angle[n1]
   theta_math <- (180 - theta_angle) #theta of oriented line
   x <- centers_PC[n1,2]
@@ -1957,7 +1963,7 @@ for (n1 in len) {
   coef2 <- c(b2_img,a_img)
   
   if (is.finite(a)) {
-    abline(coef2, col="red", lty=1, lwd=2, asp=1)
+    abline(coef2, col="blue", lty=1, lwd=2, asp=1)
   }  else {
     ro_l1 <- B4$ro_pixel[lnr]
     ro_l2 <- ro_l1 + ro_1
