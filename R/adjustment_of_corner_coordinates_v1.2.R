@@ -1,9 +1,10 @@
 ##name of program (script): adjustment of corner coordinates.R
 cat("version_number= ",v_nr,"\n")
 ## description: calculation of final coordinates of polygon-corners (vertexes)
-# weighted average of the main direction (theta_av) 
-# ro-values are calculated by least-squares adjustment
-# average of standard deviation of residuals to be used as quality control
+# method 1: use of condition for orthogonal lines
+# method 2: weighted average of the main direction (theta_av) 
+# ro-values are calculated by least-squares adjustment (all line types)
+# quality control by standard deviation of residuals
 ## author: Joachim Höhle
 ## instructions: use supplementing scripts in case of problems
 ## GNU General Public License (GPL)
@@ -22,8 +23,11 @@ r_max <- plotPar[3]
 #input of adjusted angle (theta, weighted average)
 setwd(home_dir)
 fname10 <- paste("./data/",Img_name,"/theta_av_b",bnr2,".txt", sep="")
-theta_av <- as.numeric(read.table(fname10))
-cat("theta_adj_av (weighted average) = ", theta_av, "[degrees]", "\n")
+
+if (cas == "100_all+nonortho") {
+  theta_av <- as.numeric(read.table(fname10))
+  cat("theta_adj_av (weighted average) = ", theta_av, "[degrees]", "\n")  
+}
 
 # input of table with adjusted parameters (theta_adj, ro_adj)
 f2 <- paste("./data/",Img_name,"/param_adj_b",bnr2,".txt",sep="")
@@ -53,28 +57,18 @@ B8S <- B8
 n_ortholines2 <- sum(B8S$ortho)
 
 #introduction of adjusted angle (theta_av)
-
-for (i in z) {
+if (cas == "100_all+nonortho") {
   
-  if (B8S$ortho[i] == 1) { #buildings with orthogonal lines
-    B8S$theta_adj[i] <- theta_av
-  } 
-
-} # end for-loop
-# 
-B8S
-
-if (cas != "100_all+nonortho") { #solution for objects with orthogonal lines
- 
   for (i in z) {
     
-    if (B8S$theta_ang[i] >= 90 && theta_av < 90) {
-      B8S$theta_adj[i] <- B8S$theta_adj[i] + 90 
-    }
-    
-  } # end i-loop
+    if (B8S$ortho[i] == 1) { #buildings with orthogonal lines
+      B8S$theta_adj[i] <- theta_av
+    } 
   
-} #end if cas != "100_all+nonortho"
+    } # end for-loop
+} #end if (cas == "100_all+nonortho")
+ 
+B8S
 
 n_pts <- nrow(B8S)
 
@@ -160,48 +154,8 @@ A[,] <- 0
 A <- design_mat(m,phi) #call of function
 A
 
-if (cas == "extr_wd" || cas == "4_long") {
-  #input of approximate coordinates
-  setwd(home_dir)
-  fname12 <- paste("./data/",Img_name,"/b",bnr2,"_coord_appr.txt",sep = "")
-  b01 <- read.table(fname12,col.names="xy")
-  b01 #approximate corner coordinates
-  m2=4
-  X <- rep(0,4)
-  Y <- rep(0,4)
+if (cas == "extr_wd" || cas == "4_long" || cas == "100_all") { #orthogonal objects
   
-  vec <- 1 : 4
-  
-  for (i in vec) {
-    X[i] <- b01$xy[2*i - 1]
-    Y[i] <- b01$xy[2*i]
-  }
-  
-  X
-  Y
-  
-  res3 <- adj_4corcoo(X,Y) #function call
-  XY_adj_4corners_1 <- res3[[1]] #adjusted coordinates of 4-corner building
-  std_dev_coor <- res3[[2]] #standard deviation of coordinates
-  
-  #
-  #Iteration2
-  XY_adj_4corners_1
-  #vec <- 1 : 4
-  
-  #for (i in vec) {
-  X <- XY_adj_4corners_1[,2]
-  Y <- XY_adj_4corners_1[,3]
-  #}
-  X
-  Y
-  res4 <- adj_4corcoo(X,Y) #function call
-  XY_adj_4corners_2 <- res4[[1]] #adjusted coordinates of 4-corner building
-  std_dev_coor2 <- res4[[2]] #standard deviation of coordinates
-} #end if cas = "extr_wd","4_long"
-
-##
-if (cas == "100_all") {
   #input of approximate coordinates
   setwd(home_dir)
   fname12 <- paste("./data/",Img_name,"/b",bnr2,"_coord_appr.txt",sep = "")
@@ -221,34 +175,16 @@ if (cas == "100_all") {
   
   X
   Y
-  n=6
-  res6 <- adj_6corcoo(n,X,Y) #function call
-  XY_adj_6corners_1 <- res6[[1]] #adjusted coordinates of 4-corner building
-  std_dev_coo_1 <- res6[[2]] #standard deviation of coordinates
+  n <- m2
   
-  #
-  #Iteration2
-  XY_adj_6corners_1
-
-  X <- XY_adj_6corners_1[,2]
-  Y <- XY_adj_6corners_1[,3]
- 
-  X
-  Y
-  res6 <- adj_6corcoo(n,X,Y) #function call
-  XY_adj_6corners_2 <- res6[[1]] #adjusted coordinates of 4-corner building
-  std_dev_coor_2 <- res6[[2]] #standard deviation of coordinates
-  XY_adj_6corners_2
-  std_dev_coor_2
-} #end if cas = "100_all"
+  #calculation of adjustment
+  res <- adj_orthog_corcoo(n,X,Y) #function call
+  res
+  XY_adj_ncorners_1 <- res[[1]] #adjusted coordinates of orthogonal objects
+  std_dev_coo_1 <- res[[2]] #standard deviation of coordinates
+} #end if cas == "extr_wd" || cas == "4_long" || cas == "100_all"
 
 if (cas == "100_all+nonortho") {
-# dif2 <- c(-0.7,1.1,-0.4,-1.0,0.7,-1.2,0.4,1.1)
-# sd(dif2)
-# 
-# dif1 <- c(1.4,-0.6,-0.9,-1.4,-0.6,1.5,0.4,0.5)
-# sd(dif1)
-#
   #input of approximate coordinates
   setwd(home_dir)
   fname12 <- paste("./data/",Img_name,"/b",bnr2,"_coord_appr.txt",sep = "")
@@ -270,7 +206,7 @@ if (cas == "100_all+nonortho") {
   
   while (i <= n_B8S) {
       b_mat[j,2] <- b_xy_vertex$ortho[i]
-      b_mat[j+1,2] <- b_xy_vertex$ortho[i]
+      b_mat[(j+1),2] <- b_xy_vertex$ortho[i]
       i <- i + 1
       j <- 2*i - 1
    } #end of loop i
@@ -287,20 +223,20 @@ if (cas == "100_all+nonortho") {
   ##checks by plotting the results
   
   #plot of adjusted corner coordinates
-  
-  #separated in x und y
   Points_x <- rep(0,(m2+1))
   Points_x[m2+1] <- p[1,1] #repeat first point (x-coordinate)
+  
   k <- 1
   i <- 1
-  
   #loop i
   while(i <= (2*m2 - 1)) {
     Points_x[k] <- p[i,1]
     k <- k + 1
     i <- i + 2
+    #i <- i + 1
   } #end loop i
   Points_x
+  
   Points_y <- rep(0,m2+1)
   Points_y[m2+1] <- p[2,1] #repeat first point (y-coordinated)
   k <- 1
@@ -312,19 +248,15 @@ if (cas == "100_all+nonortho") {
     k <- k + 1
     i <- i + 2
   } #end loop i
+  
   Points_y
   b_seri_xy2 <- matrix(nrow=m2+1, ncol=3)
-  #b_seri_xy2 <- cbind(Points_x,Points_y)
   b_seri_xy2[,1] <- 1 : (m2+1)
   b_seri_xy2[,2] <- Points_x
   b_seri_xy2[,3] <- Points_y
-  #
-  #dimnames(b_seri_xy2)[[2]] <- list("x","-y")
-  #dimnames(b_seri_xy2)[[2]] <- list("nr","x","-y")
-  colnames(b_seri_xy2) <- c("nr","x","-y")
   b_seri_xy2
-  #b_seri_xy2 <- 1 : (m2+1)
-  #b_seri_xy2[5,1:3] <- b_seri_xy2[1,1:3]
+  #
+  colnames(b_seri_xy2) <- c("nr","x","-y")
   b_seri_xy2
   k1 <- m2
   
@@ -334,14 +266,10 @@ if (cas == "100_all+nonortho") {
   #loop i
   while(i < k1) {
     i <- i + 1
-    #x <- Points_x[i]
-    #x <- X[i]
     x <- b_seri_xy2[i,2]
-    #y <- Y[i]
     y <- b_seri_xy2[i,3]
     xy <- b_seri_xy2[,2:3]
     points(x,y, pch=20, cex=1.5, col="blue", asp=1)
-    #lines(xy,  col="red", asp=1, type="l", lwd=2, lty=1)
   }
   
   xy <- b_seri_xy2[,2:3]
@@ -381,54 +309,47 @@ if (cas == "100_all+nonortho") {
   #
   setwd(home_dir)
   fname13=paste("./results/",Img_name,"/b",bnr2,"_coord_adj.txt",sep="")
-  #write.table(XY_adj_6corners_2,fname13)
-  #write.table(paste("XY_adj_",m2,"corners_2",sep=""),fname13)
   write.table(b_seri_xy2[1:m2,],fname13)
   #
 } #end if cas = "100_all+nonortho"
 
-## final coordinates of corners
-if (cas == "extr_wd" || cas == "4_long") {
-  #b_seri_xy2 <- cbind(Points_x,Points_y)
-  XY_adj_4corners_2
-  b_seri_xy2 <- matrix(nrow=5, ncol=3)
-  b_seri_xy2[1:4,] <- XY_adj_4corners_2[1:4,]
-  b_seri_xy2[5,] <- XY_adj_4corners_2[1,]
-  #dimnames(b_seri_xy2)[[2]] <- list("x","-y")
+if (cas == "extr_wd" || cas == "4_long" || cas == "100_all") { #solving orthogonal buildings
+  XY_adj_ncorners_1
+  n <- m2
+  b_seri_xy2 <- matrix(nrow=n+1, ncol=3)
+  b_seri_xy2[1:n,] <- XY_adj_ncorners_1[1:n,]
+  b_seri_xy2[(n+1),] <- XY_adj_ncorners_1[1,]
   dimnames(b_seri_xy2)[[2]] <- list("nr","x","-y")
   b_seri_xy2
   row.names(b_seri_xy2) <- 1 : (m2+1)
-  b_seri_xy2[5,1:3] <- b_seri_xy2[1,1:3]
   b_seri_xy2
   k1 <- m2
-
+  
   #plot
   i <- 0
-
+  
   #loop i
   while(i < k1) {
     i <- i + 1
-    #x <- Points_x[i]
     x <- X[i]
     y <- Y[i]
     xy <- b_seri_xy2[,2:3]
-    points(x,y, pch=20, cex=1.5, col="green", asp=1)
-    #lines(xy,  col="red", asp=1, type="l", lwd=2, lty=1)
+    points(x,y, pch=20, cex=1.5, col="black", asp=1)
   }
-
+  
   xy <- b_seri_xy2[,2:3]
-  lines(xy,  col="red", asp=1, type="l", lwd=2, lty=1)
+  lines(xy,  col="black", asp=1, type="l", lwd=2, lty=1)
   
   cat("adjusted coordinates:","\n")
   print(b_seri_xy2)
-
+  
   ## output of final coordinates 
-
-  #output of final coordinates for plotting
+  
+  #for plotting
   setwd(home_dir)
   fname14 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
   write.table(b_seri_xy2,fname14)
-
+  
   #output of point_numbers (vertices) with intersecting line-pairs
   f4 <- paste("./data/",Img_name,"/b",bnr2,"_PC_nr.txt",sep="")
   setwd(home_dir)
@@ -451,73 +372,7 @@ if (cas == "extr_wd" || cas == "4_long") {
   f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord.txt",sep="")
   write.table (intsec_linepair_vertex_coord, f5)
   #
-} #end cas="extr_wd","4_long" 
-
-if (cas == "100_all") { #solving 6corner buildings
-  #
-  XY_adj_6corners_2
-  #XY_adj_4corners_2
-  b_seri_xy2 <- matrix(nrow=7, ncol=3)
-  b_seri_xy2[1:6,] <- XY_adj_6corners_2[1:6,]
-  b_seri_xy2[7,] <- XY_adj_6corners_2[1,]
-  #dimnames(b_seri_xy2)[[2]] <- list("x","-y")
-  dimnames(b_seri_xy2)[[2]] <- list("nr","x","-y")
-  b_seri_xy2
-  row.names(b_seri_xy2) <- 1 : (m2+1)
-  b_seri_xy2[7,1:3] <- b_seri_xy2[1,1:3]
-  b_seri_xy2
-  k1 <- m2
   
-  #plot
-  i <- 0
-  
-  #loop i
-  while(i < k1) {
-    i <- i + 1
-    #x <- Points_x[i]
-    x <- X[i]
-    y <- Y[i]
-    xy <- b_seri_xy2[,2:3]
-    points(x,y, pch=20, cex=1.5, col="black", asp=1)
-    #lines(xy,  col="red", asp=1, type="l", lwd=2, lty=1)
-  }
-  
-  xy <- b_seri_xy2[,2:3]
-  lines(xy,  col="black", asp=1, type="l", lwd=2, lty=1)
-  
-  cat("adjusted coordinates:","\n")
-  print(b_seri_xy2)
-  
-  ## output of final coordinates 
-  
-  #output of final coordinates for plotting
-  setwd(home_dir)
-  fname14 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
-  write.table(b_seri_xy2,fname14)
-  
-  #output of point_numbers (vertices) with intersecting line-pairs
-  f4 <- paste("./data/",Img_name,"/b",bnr2,"_PC_nr.txt",sep="")
-  setwd(home_dir)
-  line_nrs <- read.table(f4, col.names = "lnr")
-  line_nrs2 <- rep(0,m2)
-  
-  i=1
-  while (i < m2) { 
-    line_nrs2[i] <- line_nrs$lnr[i+1]
-    i <- i + 1
-  }
-  
-  line_nrs2[m2] <- line_nrs$lnr[1]
-  intsec_linepair_vertex_coord <- matrix(nrow=m2, ncol=4)
-  intsec_linepair_vertex_coord [,1] <- paste(line_nrs$lnr,"_",line_nrs2,sep="")
-  intsec_linepair_vertex_coord [,2] <- 1 : m2
-  intsec_linepair_vertex_coord [,3:4] <- b_seri_xy2[1:m2,1:2]
-  #
-  print(intsec_linepair_vertex_coord)
-  f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord.txt",sep="")
-  write.table (intsec_linepair_vertex_coord, f5)
-  #
-  #
   #output of point_numbers (vertices) with intersecting line-pairs
   f4 <- paste("./data/",Img_name,"/b",bnr2,"_PC_nr.txt",sep="")
   setwd(home_dir)
@@ -540,20 +395,15 @@ if (cas == "100_all") { #solving 6corner buildings
   f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord_123.txt",sep="")
   write.table (intsec_linepair_vertex_coord, f5)
   #
-} #end cas="100_all" 
+} #end cas == "extr_wd" || cas == "4_long" || cas == "100_all" (alle orthogonal objects)
 
 
 #output of adjusted coordinates
-# setwd(home_dir)
-# fname13=paste("./results/",Img_name,"/b",bnr2,"_coord_adj.txt",sep="")
-# write.table(p,fname13)
-#
 
 if (cas == "100_all" || cas == "extr_wd" || cas == "4_long") { 
   setwd(home_dir)
   fname13=paste("./results/",Img_name,"/b",bnr2,"_coord_adj.txt",sep="")
-  #write.table(XY_adj_6corners_2,fname13)
-  write.table(paste("XY_adj_",m2,"corners_2",sep=""),fname13)
+  write.table(paste("XY_adj_",m2,"corners_1",sep=""),fname13)
 }
 
 cat("end of 'adjustment_of_corner_coordinates.R'-continue with 'plot results_on_references.R'","\n")
