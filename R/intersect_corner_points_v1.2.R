@@ -306,83 +306,84 @@ write.table(B6_seq, fname9)
 #
 #########################################################################
 
-# if (cas != "100_all+nonortho") {
-#   
-#   #averaging of angles (theta_av)
-#   theta_vec <- rep(0,n_B6_seq)
-#   np_vec <- rep(0,n_B6_seq)
-#   theta_vec2 <- rep(0,n_B6_seq)
-#   np_vec2 <- rep(0,n_B6_seq)
-#   z <- 1 : n_B6_seq
-#   
-#   #loop
-#   for (i in z) { 
-#     
-#     if (B6_seq$theta_ang[i] == theta_ref || B6_seq$theta_ang[i] == alph_ref) {
-#       B6_seq$ortho[i] <- 1
-#     } else {
-#       B6_seq$ortho[i] <- 0 #other orientation than theta_ref or alph_ref
-#     } #end if-else
-#     
-#   } #end of for-loop
-#   
-#   B6_seq
-#   
-#   for (i in z) {
-#     
-#     if (B6_seq$ortho[i] == 1) {
-#       theta_vec[i] <- B6_seq$theta_adj[i]
-#       np_vec[i] <- B6_seq$np[i]
-#     }
-#     
-#   } #end for-loop
-#   
-#   np_vec
-#   theta_vec
-#   
-#   for (i in z) {
-# 
-#     if (B6_seq$theta_adj[i] < 0) {
-#       theta_vec[i] <- B6_seq$theta_adj[i] + 90
-#       np_vec[i] <- B6_seq$np[i]
-#     }
-# 
-#   } #end for-loop
-#   
-#   theta_vec
-#   np_vec
-#   theta_vec_red <- subset(theta_vec, theta_vec >= 0)
-#   theta_vec_red
-#   n_theta_main <- length(theta_vec_red)
-#   n_theta_main
-#   vec <- 1 : n_theta_main
-#   ang <- theta_vec_red
-#   ang_mod <- ang
-# 
-#   for (i in vec) { #reduction to range 0...90
-#     
-#     if (ang[i] > 90) {
-#       ang_mod[i] <- (ang[i] - 90)
-#     } else {
-#       ang_mod[i] <- ang[i] #corrected
-#     }
-#     
-#   } #end for-loop
-#   
-#   ang_mod
-#   ang_mod2 <- ang_mod
-#   len <- np_vec
-#   ang_mod2
-#   len
-#   theta_average <- w_av(ang_mod2,len) #call of function
-#   cat("theta_average= ",theta_average, "\n")
-#   theta_av <- theta_average
-#   
-#   #output of weighted average of angle
-#   setwd(home_dir)
-#   f <- paste("./data/",Img_name,"/theta_av_", bnr2,"_ref.txt",sep="")
-#   write.table(theta_average,f)
-# } #end if cas != "100_all+nonortho"
+if (cas != "100_all+nonortho") {
+
+  #averaging of angles (theta_av)
+  theta_vec <- rep(0,n_B6_seq)
+  np_vec <- rep(0,n_B6_seq)
+  theta_vec2 <- rep(0,n_B6_seq)
+  np_vec2 <- rep(0,n_B6_seq)
+  z <- 1 : n_B6_seq
+
+  #loop
+  for (i in z) {
+
+    if (B6_seq$theta_ang[i] == theta_ref || B6_seq$theta_ang[i] == alph_ref) {
+      B6_seq$ortho[i] <- 1
+    } else {
+      B6_seq$ortho[i] <- 0 #other orientation than theta_ref or alph_ref
+    } #end if-else
+
+  } #end of for-loop
+
+  B6_seq
+
+  for (i in z) {
+
+    if (B6_seq$ortho[i] == 1) {
+      theta_vec[i] <- B6_seq$theta_adj[i]
+      np_vec[i] <- B6_seq$np[i]
+    }
+
+  } #end for-loop
+
+  np_vec
+  theta_vec
+
+  for (i in z) {
+
+    if (B6_seq$theta_adj[i] < 0) {
+      theta_vec[i] <- B6_seq$theta_adj[i] + 90
+      np_vec[i] <- B6_seq$np[i]
+    }
+
+  } #end for-loop
+
+  theta_vec
+  np_vec
+  theta_vec_red <- subset(theta_vec, theta_vec >= 0)
+  theta_vec_red
+  n_theta_main <- length(theta_vec_red)
+  n_theta_main
+  vec <- 1 : n_theta_main
+  ang <- theta_vec_red
+  ang_mod <- ang
+
+  for (i in vec) { #reduction to range 0...90
+
+    if (ang[i] > 90) {
+      ang_mod[i] <- (ang[i] - 90)
+    } else {
+      ang_mod[i] <- ang[i] #corrected
+    }
+
+  } #end for-loop
+
+  ang_mod
+  ang_mod2 <- ang_mod
+  len <- np_vec
+  ang_mod2
+  len
+  theta_average <- w_av(ang_mod2,len) #call of function
+  cat("theta_average= ",theta_average, "\n")
+  theta_av <- theta_average
+  theta_av
+  #output of weighted average of angle
+  setwd(home_dir)
+  #f <- paste("./data/",Img_name,"/theta_av_", bnr2,"_ref.txt",sep="")
+  f <- paste("./data/",Img_name,"/theta_av_b", bnr2,".txt",sep="")
+  write.table(theta_average,f)
+} #end if cas != "100_all+nonortho"
 
 if (cas == "100_all+nonortho") {  
   
