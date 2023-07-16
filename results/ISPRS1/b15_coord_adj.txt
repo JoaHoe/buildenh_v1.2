@@ -1,0 +1,2 @@
+"x"
+"1" "XY_adj_6corners_1"
