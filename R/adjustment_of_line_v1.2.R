@@ -214,7 +214,7 @@ for (i in y2) {
     }
     
     B6[i,7] <- "2" #label of solution 2
-    
+    names(B6)[7] <- "solution"
     #calculation of ro
     ys_img <- (-ys)
     ro_test_img <- cos(B6[i,5]/omega) * xs + sin(B6[i,5]/omega) * ys_img #img-system
