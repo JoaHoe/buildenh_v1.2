@@ -392,9 +392,8 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all") { #solving orthogon
   intsec_linepair_vertex_coord [,3:4] <- b_seri_xy2[1:m2,2:3]
   #
   print(intsec_linepair_vertex_coord)
-  f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord_123.txt",sep="")
-  write.table (intsec_linepair_vertex_coord, f5)
-  #
+  #f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord_123.txt",sep="")
+  #write.table (intsec_linepair_vertex_coord, f5)
 } #end cas == "extr_wd" || cas == "4_long" || cas == "100_all" (alle orthogonal objects)
 
 
