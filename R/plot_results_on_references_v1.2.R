@@ -15,60 +15,6 @@ intsec_linepair_vertex_coord2 <- read.table(f5)
 names(intsec_linepair_vertex_coord2) <- c("line_pair","vertex_nr","x","y")
 cat("table with line-pairs,vertex/corner-number,coordinates(x,y)","\n")
 print(intsec_linepair_vertex_coord2)
-
-#plot of final results onto orthoimage (small scale)
-# setwd(OrgImgPathname)
-# img_ref <- readImage(OrgImgFilename)
-# display(img_ref, method = "raster")
-# #
-# 
-# #plot of coordinates and connecting lines of object onto orthoimage
-# setwd(home_dir)
-# fname12 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_12_plot.txt",sep="")
-# b <- read.table(fname12,header=T)
-# cat("plot of orthoimage", "\n")
-# k1 <- nrow(b)
-# names(b) <- c("Points_nr","Points_x","Points_y")
-# b$Points_y <- (-b$Points_y) #change to img-system
-# b2<- b[,2:3]
-# cat("plot of building outline on top of orthoimage","\n")
-# #
-# 
-# i <- 0
-# 
-# while(i < k1) {
-#   i <- i+1
-#   lines(b2, col="white", asp=1, type="l", lwd=2, lty=1)
-# } #end while
-
-
-##plotting of results onto orthoimage (large scale)
-# display(img_uds,method = "raster")
-# n_x <- length(PC_nr)
-# vec_y <- 1 : n_x
-# orig_y <- (-orig_y_math) #change to img-system
-# orig_y
-# points((xc-orig_x),(yc-orig_y),pch=3, asp=1, cex=1.3, col="red")
-# points(pc3$col-orig_x,pc3$row-orig_y,pch=20,asp=1,cex=0.3,col="green")
-# lines((b$Points_x-orig_x),(b$Points_y-orig_y),col="red",asp=1,type="l",lwd=2,lty=1)
-# 
-# #plot of lines one by one
-# display(img_uds,method = "raster")
-# points((xc-orig_x),(yc-orig_y),pch=3, asp=1, cex=1.3, col="red")
-# points(pc3$col-orig_x,pc3$row-orig_y,pch=20,asp=1,cex=0.3,col="green")
-
-# #loop
-# for (i in vec_y) {
-#   cat("i=",i,"\n")
-#   b$Points_x_red[i] <- b$Points_x[i]-orig_x
-#   b$Points_x_red[i+1] <- b$Points_x[i+1]-orig_x
-#   b$Points_y_red[i] <- b$Points_y[i]-orig_y
-#   b$Points_y_red[i+1] <- b$Points_y[i+1]-orig_y
-#   lines(b$Points_x_red[i:(i+1)],b$Points_y_red[i:(i+1)],
-#         col="blue",asp=1,type="l",lwd=2,lty=1)
-# } #end for-loop
-# 
-# #end of plot at large scale
 # 
 
 ##plotting of results onto orthoimage 
@@ -78,17 +24,14 @@ print(intsec_linepair_vertex_coord2)
 if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+nonortho") { 
   ##input of table with line-pair, vertex-number and final coordinates (x,y)
   setwd(home_dir)
-  #f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord_123.txt",sep="")
   f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord.txt",sep="")
   intsec_linepair_vertex_coord2 <- read.table(f5)
   names(intsec_linepair_vertex_coord2) <- c("line_pair","vertex_nr","x","y")
   cat("table with line-pairs,vertex/corner-number,coordinates(x,y)","\n")
   print(intsec_linepair_vertex_coord2)
   #
-  #f6 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_123_plot.txt",sep="")
   f6 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
   xy_5pts <- read.table(f6)
-  #names(xy_5pts) <- c("vertex_nr","x","y")
   names(xy_5pts) <- c("x","y")
   xy_5pts
   
