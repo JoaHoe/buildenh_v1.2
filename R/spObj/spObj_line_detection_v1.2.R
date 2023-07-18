@@ -242,7 +242,7 @@ if (Img_name == "ISPRS1") {
   #cas='100_all'
   
   if (bnr2 == 13 && p_pos == "cor_det") { 
-      B5_6R4 <- B5_6[-c(6,7),]
+      B5_6R4 <- B5_6[-c(2,3,7),]
       row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
   } #end b13
   
