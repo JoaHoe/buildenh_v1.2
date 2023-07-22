@@ -567,7 +567,7 @@ if(is.finite(a)) {
 #search for parallel and orthogonal lines based on reference line (ref) 
 #select ref line, usually the first (longest) line
 #joint search for parallel and orthogonal lines with 'theta_angle' and 'theta_angle-90' degrees
-#minimum length of line segment (wd=n_pix=lol): 15 pixels
+#minimum length of line segment (wd=n_pix=lol): 10 pixels
 #stop("manual test")
 
 k13 <- nrow(B4)
@@ -607,7 +607,7 @@ while (i < k13) {
 
 ## generalizing, reduction of matrix, conversion to data frame
 head(B5_2)
-B5_3 <- subset(B5_2,B5_2[,7] >= lol) # length of lines (lol) >= 15 pixels (=1.4 m) (n_pixel)
+B5_3 <- subset(B5_2,B5_2[,7] >= lol) # length of lines (lol) >= 10 pixels (=0.9 m) (n_pixel)
 B5_3
 B5_4 <- data.frame(B5_3)
 names(B5_4) <- c("lnr", "theta_index", "ro_index", "n", "theta_angle","ro_pixel","n_pixel")
@@ -859,7 +859,7 @@ ce_df
 ce_df$lnr
 
 #derivation of parameter (ces) for number of orthogonal lines
-ces <- 0 #number of orthogonal lines in the first 10 lines at B4 
+ces <- 0 #number of orthogonal lines in the first 8 lines at B4 
 i <- 1
 
 #loop
@@ -871,7 +871,7 @@ while (i <= length(ce_df$lnr)) {
 } #end while-loop
 
 n_ortholines_1 <- ces
-n_nonortholines <- n_longest_lines - n_ortholines_1 #number of non-ortholines at first 10 lines
+n_nonortholines <- n_longest_lines - n_ortholines_1 #number of non-ortholines at first 8 lines
 max_pix <- B4$n_pixel[n_longest_lines] #size of 8th PC
 
 #parameters for estimating of object-type:
@@ -1694,7 +1694,7 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
   B5_6_cor2$lnr
   B5_6_cor2
   
-  ## search for all parameter in matrix with all detected PCs
+  ## search for all parameters in matrix with all detected PCs
   np <- length(B4$lnr)
   i <- 1
   
@@ -1765,7 +1765,7 @@ if (cas == "100_all") {
 }
 
 if (cas == "100_all+nonortho") {
-  B5_6 <- B5_6
+  B5_6 <- B5_6 #dummy line
 }
 
 B5_6 
@@ -1936,7 +1936,7 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), pch=20, asp=1, ce
 len
 for (n1 in len) {
   cat("PC_nr=", B5_6$lnr[n1], "\n")
-  browser()
+  #browser()
   theta_angle <- B5_6$theta_angle[n1]
   theta_math <- (180 - theta_angle) #theta of oriented line
   x <- centers_PC[n1,2]
