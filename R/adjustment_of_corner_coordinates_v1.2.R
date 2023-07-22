@@ -177,7 +177,7 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all") { #orthogonal objec
   Y
   n <- m2
   
-  #calculation of adjustment
+  #calculation of adjustment with orthogonality condition
   res <- adj_orthog_corcoo(n,X,Y) #function call
   res
   XY_adj_ncorners_1 <- res[[1]] #adjusted coordinates of orthogonal objects
